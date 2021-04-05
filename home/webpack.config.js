@@ -39,11 +39,10 @@ module.exports={
       title: 'Home'
     }),
     new ModuleFederationPlugin({
-      name: "Home Page",
-      remotes: {
-        HomeApp: 'HomeApp@http://localhost:9005/remoteEntry.js',
-        ContactApp: 'ContactApp@http://localhost:9007/remoteEntry.js'
-
+      name: "HomeApp",
+      filename: 'remoteEntry.js',
+      exposes:{
+        './HomePage':'./src/App'
       }
     })
   ]

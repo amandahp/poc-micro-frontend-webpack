@@ -54,11 +54,10 @@ module.exports={
       title: 'Dashboard'
     }),
     new ModuleFederationPlugin({
-      name: "Dashboard",
-      remotes: {
-        HomeApp: 'HomeApp@http://localhost:9005/remoteEntry.js',
-        ContactApp: 'ContactApp@http://localhost:9007/remoteEntry.js'
-
+      name: "DashboardApp",
+      filename: "remoteEntre.js",
+      exposes:{
+        './DashboardPage':'./src/App'
       }
     })
   ]

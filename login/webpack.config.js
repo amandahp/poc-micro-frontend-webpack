@@ -39,10 +39,10 @@ module.exports={
       title: 'Login'
     }),
     new ModuleFederationPlugin({
-      name: "Login Page",
-      remotes: {
-       
-
+      name: "LoginApp",
+      filename: "remoteEntre.js",
+      exposes:{
+        './LoginPage':'./src/App'
       }
     })
   ]

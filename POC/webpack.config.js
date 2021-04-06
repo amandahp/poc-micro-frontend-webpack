@@ -1,9 +1,11 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const deps = require("./package.json").dependencies;
 
 module.exports={
   entry: './src/index.js',
+  cache: false,
   output:{
     path: path.resolve(__dirname, './dist'),
     publicPath: 'http://localhost:9000/'
@@ -56,12 +58,22 @@ module.exports={
     new ModuleFederationPlugin({
       name: "Appliaction",
       remotes: {
+        HomeApp: 'HomeApp@http://localhost:9001/remoteEntry.js',
         DashboardApp: 'DashboardApp@http://localhost:9005/remoteEntry.js',
         HeaderApp: 'HeaderApp@http://localhost:9004/remoteEntry.js',
-        HomeApp: 'HomeApp@http://localhost:9001/remoteEntry.js',
-        LoginApp: 'LoginApp@@http://localhost:9003/remoteEntry.js',
-
-      }
+        LoginApp: 'LoginApp@http://localhost:9003/remoteEntry.js',     
+      },
+      shared: {
+        ...deps,
+        react: {
+          singleton: true,
+          requiredVersion: deps.react,
+        },
+        "react-dom": {
+          singleton: true,
+          requiredVersion: deps["react-dom"],
+        },
+      },
     })
   ]
 
